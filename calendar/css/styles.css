@@ -1,0 +1,57 @@
+
+/********** Base styles **********/
+* {
+  box-sizing: border-box;
+}
+h1 {
+	text-align: center;
+  font-size: 50px;
+  color: orange;
+}
+p {
+  float: left;
+  border: 1px solid black;
+  margin: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-family: Helvetica;
+  width: 14%;
+  text-align: center;
+  font-weight: bold;
+}
+.row {
+  width: 100%;
+  margin: auto;
+}
+.mon p, .tue p, .wed p, .thu p, .fri p {
+  color: blue;
+  background-color: rgba(152,228,228,.2);
+  font-size: 70px;
+}
+.sat p, .sun p {
+  color: red;
+  background-color: rgba(230,195,152,.2);
+  font-size: 70px;
+}
+.colored .mon p, .colored .tue p, .colored .wed p, .colored .thu p, .colored .fri p {
+  background-color: rgb(152,228,228);
+  font-size: 40px;
+} 
+.colored .sat p, .colored .sun p {
+  background-color: rgb(230,195,152);
+  font-size: 40px;
+}
+
+/********** Small devices only **********/
+@media (max-width: 500px) {
+  p {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .mon p, .tue p, .wed p, .thu p, .fri p, .sat p, .sun p {
+    font-size: 40px;
+  }
+  .colored .mon p, .colored .tue p, .colored .wed p, .colored .thu p, .colored .fri p, .colored .sat p, .colored .sun p {
+    font-size: 20px;
+  } 
+}
