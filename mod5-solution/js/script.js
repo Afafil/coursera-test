@@ -83,7 +83,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
 showLoading("#main-content");
 $ajaxUtils.sendGetRequest(
   allCategoriesUrl,
-  buildAndShowHomeHTML(allCategoriesUrl), // ***** <---- TODO: STEP 1: Substitute [...] ******
+    //buildAndShowHomeHTML, // ***** значение функции не работает
+    $ajaxUtils.sendGetRequest(
+        allCategoriesUrl,
+        buildAndShowHomeHTML, true), // ***** <---- TODO: STEP 1: Substitute [...] ******
+    //buildAndShowHomeHTML(allCategoriesUrl), // ***** <---- TODO: STEP 1: Substitute [...] ******
   true); // Explicitely setting the flag to get JSON from server processed into an object literal
 });
 // *** finish **
@@ -102,7 +106,8 @@ function buildAndShowHomeHTML (categories) {
       // Pay attention to what type of data that function returns vs what the chosenCategoryShortName
       // variable's name implies it expects.
 
-      var chosenCategoryShortName = chooseRandomCategory(categories);
+      //var chosenCategoryShortName = chooseRandomCategory(menuItemsUrl);
+      var chosenCategoryShortName = chooseRandomCategory(categories).short_name;
 
 
       // TODO: STEP 3: Substitute {{randomCategoryShortName}} in the home html snippet with the
@@ -117,7 +122,7 @@ function buildAndShowHomeHTML (categories) {
       // it into the home html snippet.
       //
       var homeHtmlToInsertIntoMainPage =
-          insertProperty(homeHtml, "randomCategoryShortName", "'" + chosenCategoryShortName + "'");
+          insertProperty(homeHtml, "randomCategoryShortName", "'" + chosenCategoryShortName.toUpperCase() + "'");
 
 
       // TODO: STEP 4: Insert the the produced HTML in STEP 3 into the main page
@@ -161,6 +166,8 @@ dc.loadMenuItems = function (categoryShort) {
     menuItemsUrl + categoryShort,
     buildAndShowMenuItemsHTML);
 };
+//"https://davids-restaurant.herokuapp.com/menu_items.json?category=SP"
+//"https://davids-restaurant.herokuapp.com/menu_items.json?category=p"
 
 
 // Builds HTML for the categories page based on the data
