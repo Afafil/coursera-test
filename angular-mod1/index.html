@@ -22,6 +22,7 @@
          <div class="form-group">
              <button class="btn btn-default" ng-click="CheckIt();">Check If Too Much</button>
          </div>
+         <div ng-style="{'color': 'red'}">Note:Null values cannot take into consideration (Eg: apple,,bun,, is taken as 2)</div>
          <div class="form-group message" ng-style="customStyle.style">
            <!-- Your message can go here. -->
            {{message}}
