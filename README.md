@@ -1,3 +1,13 @@
+## Welcome to my repository
+I using it like my portfolio.
+Today I have some pages, that can show you what I can do.
+
+- List
+1. [Calendar](https://afafil.github.io/coursera-test/calendar). Just CSS, using bootstrap;
+2. [Helper to make choice](https://afafil.github.io/coursera-test/01helper). It is my trying to use javaScript.
+
+
+
 ## Welcome to GitHub Pages
 
 You can use the [editor on GitHub](https://github.com/Afafil/coursera-test/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
