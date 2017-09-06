@@ -1,60 +1,98 @@
 /**
  * Created by Alice on 8/23/2017.
  */
-document.addEventListener("DOMContentLoaded",
-    function (event) {
 
-        var decisions = [];
-        document.querySelector("#startNew").addEventListener("click", startNew);
-        document.querySelector("#Answer").addEventListener("click", answer);
+(function () {
+'use strict';
 
-        function startNew() {
-            // clean our decisions
-            // не нашла как это сделать
-            decisions = "";
-            decisions = [];
+    angular.module('DecisionsListApp', [])
+        .controller('DecisionsListAddController', DecisionsListAddController)
+        .controller('DecisionsListShowController', DecisionsListShowController)
+        .service('DecisionsListService', DecisionsListService);
 
-            var newdecision = "";
-            while (true) {
-                //while (newdecision !== null) {
-                newdecision = prompt("Enter decision", "");
-                if ((newdecision === null) || (newdecision === "")) {break}
-                decisions[decisions.length] = newdecision;
+    DecisionsListAddController.$inject = ['DecisionsListService'];
+    function DecisionsListAddController(DecisionsListService) {
+        var itemAdder = this;
+
+        itemAdder.itemName = "";
+
+        itemAdder.addItem = function () {
+            if (itemAdder.itemName != "") {
+
+                DecisionsListService.addItem(itemAdder.itemName);
+                itemAdder.itemName = "";
+            } else {
+                DecisionsListService.addItem("You fogot to write something");
             }
-
-
-            var message = "<h2>Our desicions:</h2><ul>";
-            for (var i = 0; i < decisions.length; i++) {
-                message += "<li>" + decisions[i] + "</li>";
-            }
-
-            if (decisions.length == 0) {
-                message = "<h2>Put some decisions here</h2><p>Press 'Start new' button and write few advices</p>";
-            }
-            else {
-                message += "</ul><p>Click on 'Answer' button to get the solution</p>";
-            }
-
-            document.getElementById("content").innerHTML = message;
         }
+    }
 
-        function answer() {
 
-            if (decisions.length == 0) {
-                document.getElementById("content").innerHTML = "<h1>There are no any decisions for making choice :(</h2>";
-                return(null);
+    DecisionsListShowController.$inject = ['DecisionsListService'];
+    function DecisionsListShowController(DecisionsListService) {
+        var showList = this;
+
+        showList.items = DecisionsListService.getItems();
+        showList.answer = "";
+        showList.counter = 0;
+
+        showList.removeItem = function (itemIndex) {
+            DecisionsListService.removeItem(itemIndex);
+        };
+
+        showList.makeChoice = function () {
+
+            if (showList.items.length == 0) {
+                showList.answer = "There are no any decisions for making choice. Please add some with '+' button";
+                //document.getElementById("content").innerHTML = "<h3>There are no any decisions for making choice</h3><p>Please add some with 'Add solution to decision list' button</p>";
+                return (null);
             }
 
-            var rand = Math.random();
-            var ranc = 1 / decisions.length;
+            // showList.counter++;
+            // if (showList.counter > 3) {
+            // 	showList.answer = "Do you think it is wrong solution? Than you know better what is right!";
+            // 	message += "<p></p><p>Do you think it is wrong solution? Than you know better what is right!</p>";
+            // 	document.getElementById("content").innerHTML = message;
+            // 	return(null);
+            // }
+
+            var rand = showList.items[Math.floor(Math.random() * showList.items.length)];
             var message = document.getElementById("content").innerHTML;
-            //console.log("One step for make choice = " + ranc);
-            //console.log("Our random = " + rand);
-            for (var i = 0; i < decisions.length; i++){
-                if ((rand < (i + 1) * ranc)&&(rand > (i * ranc))){
-                    message += "<h2>We think all you need is:</h2><p>" + decisions[i] + "</p>"
-                }
-            }
-            document.getElementById("content").innerHTML = message;
+
+            message += "<h2>We think all you need is:</h2><p>" + rand.name + "</p>";
+            showList.answer = "We think all you need is: " + rand.name;
+            // document.getElementById("content").innerHTML = message;
+
         }
-    });
+    }
+
+
+    function DecisionsListService() {
+        var service = this;
+
+        // List of Decisions items
+        var items = [];
+
+        service.addItem = function (itemName, quantity) {
+            var item = {
+                name: itemName,
+                quantity: quantity
+            };
+            items.push(item);
+        };
+
+        service.removeItem = function (itemIdex) {
+            items.splice(itemIdex, 1);
+        };
+
+        service.getItems = function () {
+            return items;
+        };
+
+        service.makeChoice = function () {
+            //
+            //
+        }
+    }
+
+})();
